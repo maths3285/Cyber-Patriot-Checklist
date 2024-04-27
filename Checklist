@@ -1,0 +1,58 @@
+1.	Read the README. Get root passwords and authorized users.
+2.	Answer forensic questions. If you need to find files use the command “find /home -name '*’' -type f” You can change “/home” to “/” if you want to search the entire computer.
+3.	Manage users. Delete any that aren’t supposed to exist. Undisable the accounts that are supposed to exist. Make sure everyone who should be admin is admin and everyone who is supposed to be standard is standard. Add any that are needed. Make sure to unlock and re-lock. System Settings> Users and Groups > Unlock.
+4.	Look in the README for “insecure” passwords. Change those users’ passwords.
+5.	System Settings>Software&Updates have it check for recommended updates once a day.
+6.	Delete all non-work related files (If specified in readme) use: find / -name '*.<file extension>' -type f -delete. Remove .mp3, .mov, .mp4, .avi, .mpg, .mpeg, .flac, .m4a, .flv, .ogg, .gif, .png, .jpg, and .jpeg.
+7.	“Sudo ufw enable” Allow any ports in the README
+8.	“sysctl -n net.ipv4.tcp_syncookies” stops bad cookies.
+9.	“Sudo nano /etc/apt/sources.list” Check for any bad sources
+10.	“Sudo nano /etc/hosts” Check for any redirects
+11.	“Sudo crontab -e” - check for anything in there, it might be malicious.
+12.	“Sudo nano /etc/lightdm/lightdm.conf” allow_guest=false. Then do “sudo service lightdm restart”  (make sure you aren’t doing any updates when you restart lightdm)
+13.	Remove hacking tools. Open Ubuntu Software center and look at recently installed software for “nmap”, “ophcrack”, or anything else that looks suspicious. If in doubt look up its name.
+14.	Remove non-work related software. Anything that looks like a game should be removed. If in doubt look it up. If you find a file called “passwords.txt” make sure to delete it.
+15.	Go to terminal and “sudo apt-get update” and then “sudo apt-get upgrade” and “sudo apt-get dist-upgrade”. Let the apps update while you are doing other stuff.
+a.	After Updates Complete:
+	i.	“sudo restart lightdm”This gives points for editing lightdm.conf
+16.	“Sudo nano /etc/ssh/sshd_config” PermitRootLogin to no. You might need to stop ssh, edit config, and restart. “Sudo service ssh restart”
+17.	“Sudo nano /etc/pam.d/common-password” Install “sudo apt-get install libpam-cracklib” and then add “password requisite pam_cracklib.so minlen=10” to the end of the file.
+a.	“Sudo nano /etc/pam.d/common-password” Use ^W and look for
+“pam_unix.so” add “minlen=8” to the end of this line
+18.	“Sudo apt-get install bum” Use bum to look for bad services. Remove apache, nginx, bind9 (DNS), ssh, or FTP unless otherwise stated in the README. Type “sudo bum” to start bum.
+19.	Disable samba (unless readme says otherwise) using “Sudo service smbd stop” and
+“Sudo service samba stop” (also uninstall samba too)
+20.	“Sudo nano /etc/login.defs” change/add to:
+PASS_MAX_DAYS 90
+PASS_MIN_DAYS 7
+PASS_WARN_AGE 14
+21.	“Sudo nano /etc/pam.d/common-auth” Add “auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800” (all on one line) to the end of the file. This denies password attempts and adds a lockout period.
+a. “Sudo nano /etc/pam.d/common-auth” Use ^W to find “pam_tally2.so” add “deny=5 unlock_time=1800” to the end of the line. This denies password attempts and adds a lockout period.
+22.	“Sudo visudo” Make sure only the default account can sudo.
+23.	Purge netcat. Use sudo apt-get purge netcat nc netcat-* to purge all forms of netcat.
+24.	Secure Ports. Follow these steps:
+a.	Sudo ss -ln | grep tcp This lists all open ports
+b.	Look at the list of open ports and use sudo lsof - i :<Port> to get the program
+c.	Determine if the port is a backdoor (if it has nc or netcat in the name it is a backdoor)
+d.	Determine if the program is supposed to be on the computer
+e.	These ports are safe: 22, 53, 631, 35509
+25.	Correct file permissions: Execute the following commands to put correct file permissions on important system files (with sudo):
+a.	chmod -R 444 /var/log
+b.	chmod 440 /etc/passwd
+c.	chmod 440 /etc/shadow
+d.	chmod 440 /etc/group
+e.	chmod -R 444 /etc/ssh
+Disable FTP services:
+Bring up a terminal, and type “service --status-all” and press Enter
+Type “sudo apt-get remove pure-ftpd” and press Enter. Type the password, and press enter. Hit yes, and enter.
+Nmap is prohibited software. (If applicable) to remove:
+In the terminal, type “sudo apt-get remove zenmap” or “sudo apt-get remove nmap”  and press Enter. Type the password, hit enter, then say yes and hit enter.
+Other malicious software:
+“sudo apt-get remove ophcrack” This is a hacking tool.
+Antivirus:
+“sudo apt-get install clamtk” This installs an antivirus.
+Do you hate the Ubuntu Software Center?
+Use this terminal command to search installed packages: sudo apt list --installed | grep <NAME>
+Do you love using the command line to install and remove stuff?
+To install stuff: sudo apt-get install <PACKAGE NAME>
+To remove stuff: sudo apt-get remove <PACKAGE NAME> 

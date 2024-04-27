@@ -1,0 +1,22 @@
+To locate a file (find absolute path directory): locate *.mp3 (or any file tag e.g. .jpg)
+To remove something: sudo rm * (an * removes everything from that location)
+To add a user to a group: usermod –a  –G  “group name”  “username”
+e.g “OfficeProject”   “Bernard”
+To install a firewall: sudo apt install gufw
+To show all the files/folders within the current folder: ls
+To enter a folder: cd Documents 
+To exit the folder: cd ..
+To uninstall john the ripper (a common password-cracking software): apt-get remove john  or sudo apt remove john – you might then need to use: sudo apt autoremove john (or whichever other software you might wish to remove)
+Other common malicious softwares: ophcrack, wireshark
+To remove root access: sudo gedit /etc/ssh/sshd_config – then, in the file find the “PermitRootLogin yes” line and change it to: “PermitRootLogin no” - remember to save the file
+Stop unnecessary services using the command: sudo systemctl stop “name of service” e.g “nginx” then to stop it from automatically starting again: sudo systemctl disable “name of service” e.g “nginx”
+Always check for updates, and set in >Softwares and updates>updates to check for updates daily
+Check if, using the sudo gedit /etc/group, there are users in the root group. The line should look like: root:X:0, if there are any names after, you should delete these.
+To change file permissions to non-read, non-write, non-execute, use the command sudo chmod 640 “file directory” e.g. sudo chmod 640 /etc/shadow (this is a common file to store encrypted passwords) 
+To check the permissions, use the command ls –l “file directory” e.g ls –l /etc/shadow (if the permissions end in –rw-r-----, then the permissions are non-read, non-write, non-execute).
+systemctl list-units --type=service –all : checks services 
+Then see if anything suspicious 
+rm -rf /path/to/dir/: removes any files in that directory 
+e.g /home/name/Music
+
+sudo apt-get update and then sudo apt-get --only-upgrade install google-chrome-stable: updates google chrome
